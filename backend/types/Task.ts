@@ -9,6 +9,10 @@ export interface Task {
 	updated_at: Date;
 }
 
+export interface TaskId {
+	id: string;
+}
+
 export interface CreateTask {
     name: string;
     description?: string;
