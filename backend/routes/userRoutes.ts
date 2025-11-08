@@ -1,12 +1,12 @@
 import express from "express";
-import { getUserProfile, registerUser, loginUser, updateUserProfile, deleteUserProfile } from "../controllers/userController";
+import { handleGetUserProfile, handleRegisterUser, handleLoginUser, handleUpdateUserProfile, handleDeleteUserProfile } from "../controllers/userController";
 
 const router = express.Router();
 
-router.post("/register", registerUser);
-router.post("/login", loginUser);
-router.get("/profile", getUserProfile);
-router.put("/profile", updateUserProfile);
-router.delete("/profile", deleteUserProfile);
+router.post("/register", handleRegisterUser);
+router.post("/login", handleLoginUser);
+router.get("/profile", handleGetUserProfile);
+router.put("/profile", handleUpdateUserProfile);
+router.delete("/profile", handleDeleteUserProfile);
 
 export default router;

@@ -1,51 +1,51 @@
 import { Request, Response } from "express";
-import { CreateTask, TaskId } from "../types/Task";
+import { TaskId } from "../types/Task";
 import { AppError } from "../errors/AppError";
+import TaskService from "../services/TaskService";
 
-export async function getAllTasks(req: Request, res: Response) {
-    console.log("🎮 getAllTasks controller pinged!");
-    res.json({ message: "getAllTasks controller reached!", status: "Status good yo!" });
+export async function handleGetAllTasks(req: Request, res: Response) {
+    console.log("🎮 handleGetAllTasks controller pinged!");
+    res.json({ message: "handleGetAllTasks controller reached!", status: "Status good yo!" });
 }
 
-export async function getOneTask(req: Request<TaskId>, res: Response) {
+export async function handleGetTaskById(req: Request<TaskId>, res: Response) {
     const taskId = req.params.id;
 
-    console.log("🎮 getOneTask controller pinged!");
+    console.log("🎮 handleGetTaskById controller pinged!");
     console.log(`🪪 Task ID: ${taskId}`);
-    res.json({ message: "getOneTask controller reached!", status: "Status good yo!" });
+    res.json({ message: "handleGetTaskById controller reached!", status: "Status good yo!" });
 }
 
-export async function createTask(req: Request, res: Response) {
-    const newTask: CreateTask = req.body;
-
-    console.log("🎮 createTask controller pinged!");
+export async function handleCreateTask(req: Request, res: Response) {
+    const newTask = req.body;
 
     if (!newTask.name || !newTask.priority) {
         throw new AppError("Task must include a name and a priority.");
     }
 
-    console.log("🧩 New Task:", JSON.stringify(newTask, null, 2));
+    const addedTask = TaskService.addTaskToDB(newTask);
+    console.log("🧩 New Task:", JSON.stringify(addedTask, null, 2));
 
     res.json({
-        message: "createTask controller reached!",
-        created: newTask
+        message: "handleCreateTask controller reached!",
+        created: addedTask
     });
 }
 
-export async function updateTask(req: Request<TaskId>, res: Response) {
+export async function handleUpdateTaskById(req: Request<TaskId>, res: Response) {
     const taskId = req.params.id;
 
-    console.log("🎮 updateTask controller pinged!");
+    console.log("🎮 handleUpdateTaskById controller pinged!");
     console.log(`🪪 Task ID: ${taskId}`);
-    res.json({ message: "updateTask controller reached!", status: "Status good yo!" });
+    res.json({ message: "handleUpdateTaskById controller reached!", status: "Status good yo!" });
 }
 
-export async function deleteTask(req: Request<TaskId>, res: Response) {
+export async function handleDeleteTaskById(req: Request<TaskId>, res: Response) {
     const taskId = req.params.id;
 
-    console.log("🎮 deleteTask controller pinged!");
+    console.log("🎮 handleDeleteTaskById controller pinged!");
     console.log(`🪪 Task ID: ${taskId}`);
-    res.json({ message: "deleteTask controller reached!", status: "Status good yo!" });
+    res.json({ message: "handleDeleteTaskById controller reached!", status: "Status good yo!" });
 }
 
 
